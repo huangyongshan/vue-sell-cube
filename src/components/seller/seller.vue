@@ -1,5 +1,5 @@
 <template>
-    $END$
+    <div>I am seller</div>
 </template>
 
 <script>

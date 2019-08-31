@@ -1,5 +1,5 @@
 <template>
-    $END$
+    <div>I am ratings</div>
 </template>
 
 <script>
