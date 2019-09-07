@@ -39,7 +39,6 @@
 
 <style lang="stylus" scoped>
   .cartcontrol
-    font-style: 0
     display: flex
     align-items: center
     justify-content: flex-end

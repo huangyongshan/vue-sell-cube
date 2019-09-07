@@ -39,6 +39,7 @@
             <li v-for="food in good.foods"
                 :key="food.name"
                 class="food-item"
+                @click="selectFood(food)"
             >
               <div class="icon">
                 <img width="57" height="57" :src="food.icon">
@@ -98,6 +99,7 @@
     data () {
       return {
         goods: [],
+        selectedFood: {},
         scrollerOptions: {
           click: false,
           directionLockThreshold: 0
@@ -145,8 +147,43 @@
           this.goods = goods
         })
       },
+      selectFood (food) {
+        this.selectedFood = food
+        this._showFood()
+        this._showShopCartStick()
+      },
       onAdd (el) {
         this.$refs.shopCart.drop(el)
+      },
+      _showFood () {
+        this.foodComp = this.foodComp || this.$createFood({
+          $props: {
+            food: 'selectedFood'
+          },
+          $events: {
+            leave: () => {
+              this._hideFood()
+            },
+            add: (el) => {
+              this.showShopCartStickComp.drop(el)
+            }
+          }
+        })
+        this.foodComp.show()
+      },
+      _hideFood () {
+        this.showShopCartStickComp.hide()
+      },
+      _showShopCartStick () {
+        this.showShopCartStickComp = this.showShopCartStickComp || this.$createShopCartSticky({
+          $props: {
+            selectFoods: 'selectFoods',
+            deliveryPrice: this.seller.deliveryPrice,
+            minPrice: this.seller.minPrice,
+            fold: true
+          }
+        })
+        this.showShopCartStickComp.show()
       }
     },
     components: {
@@ -222,7 +259,7 @@
       line-height: 23px
       color: $color-light-grey
       background: $color-background-ssss
-      border-left: 2px solid #d9dde1
+      border-left: 2px solid $color-col-line
       padding-left: 10px
       font-size: $fontsize-small
 

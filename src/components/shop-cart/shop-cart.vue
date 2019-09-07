@@ -173,7 +173,7 @@
           this._hideShopCartList()
         }
       },
-      pay(e) {
+      pay (e) {
         if (this.totalPrice < this.minPrice) {
           return
         }
@@ -294,6 +294,9 @@
           border-right: 1px solid rgba(255, 255, 255, 0.1)
           margin: 8px 0
           padding: 0 8px 0 0
+
+          &.highlight
+            color: $color-white
 
         .desc
           font-size: 8px
