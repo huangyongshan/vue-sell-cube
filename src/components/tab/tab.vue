@@ -16,6 +16,7 @@
         :auto-play=false
         ref="slide"
         :options="slideOptions"
+        @change="onChange"
         @scroll="onScroll"
       >
         <cube-slide-item v-for="(tab, index) in tabs" :key="index">

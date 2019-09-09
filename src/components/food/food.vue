@@ -4,7 +4,7 @@
     @after-leave="onLeave"
   >
     <div class="food" v-show="visible">
-      <cube-scroll ref="scroll">
+      <cube-scroll :data="computedRatings" ref="scroll">
         <div class="food-content">
           <div class="image-header">
             <img :src="food.image">
@@ -38,7 +38,7 @@
           <div class="rating">
             <h1 class="title">商品评价</h1>
             <rating-select
-              :ratings=ratings
+              :ratings="ratings"
               :onlyContent="onlyContent"
               :selectType="selectType"
               @select="onSelectType"
@@ -301,7 +301,7 @@
           .user
             position: absolute
             right: 0
-            top: 10px
+            top: 18px
 
             .name
               margin-right: 6px
@@ -311,6 +311,7 @@
 
           .time
             padding-bottom: 6px
+            font-size: $fontsize-small
 
           .text
             color: $color-background
