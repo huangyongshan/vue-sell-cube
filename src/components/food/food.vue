@@ -88,6 +88,7 @@
 
 <script type="text/ecmascript-6">
   import popupMixin from 'common/mixins/popup'
+  import ratingMixin from 'common/mixins/rating'
   import Split from 'components/split/split'
   import CartControl from 'components/cart-control/cart-control'
   import RatingSelect from 'components/rating-select/rating-select'
@@ -97,10 +98,8 @@
   const EVENT_LEAVE = 'leave'
   const EVENT_ADD = 'add'
 
-  const ALL = 2
-
   export default {
-    mixins: [popupMixin],
+    mixins: [popupMixin, ratingMixin],
     name: 'food',
     props: {
       food: {
@@ -109,8 +108,6 @@
     },
     data () {
       return {
-        onlyContent: true,
-        selectType: ALL,
         desc: {
           all: '全部',
           positive: '推荐',
@@ -121,18 +118,6 @@
     computed: {
       ratings () {
         return this.food.ratings
-      },
-      computedRatings () {
-        let ret = []
-        this.ratings.forEach((rating) => {
-          if (this.onlyContent && !rating.text) {
-            return
-          }
-          if (this.selectType === ALL || this.selectType === rating.rateType) {
-            ret.push(rating)
-          }
-        })
-        return ret
       }
     },
     created () {
@@ -155,12 +140,6 @@
       },
       formatDate (timeSpan) {
         return moment(timeSpan).format('YYYY-MM-DD hh:mm')
-      },
-      onSelectType (type) {
-        this.selectType = type
-      },
-      onToggle () {
-        this.onlyContent = !this.onlyContent
       }
     },
     components: {
@@ -322,7 +301,6 @@
 
             .icon-thumb_up
               color: $color-blue
-
 
         .no-rating
           padding: 18px 0
