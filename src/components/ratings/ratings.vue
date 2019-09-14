@@ -3,7 +3,7 @@
       <div class="ratings-content">
         <div class="overview">
           <div class="overview-left border-right-1px">
-            <h1 class="score">{{seller.score}}3.9</h1>
+            <h1 class="score">{{seller.score}}</h1>
             <div class="title">综合评分</div>
             <div class="rank">高于周边商家{{seller.rankRate}}%</div>
           </div>
@@ -11,12 +11,12 @@
             <div class="score-wrapper">
               <span class="title">服务态度</span>
               <star :size="36" :score="seller.serviceScore"></star>
-              <span class="score">{{seller.serviceScore}}3.9</span>
+              <span class="score">{{seller.serviceScore}}</span>
             </div>
             <div class="score-wrapper">
               <span class="title">商品评分</span>
               <star :size="36" :score="seller.foodScore"></star>
-              <span class="score">{{seller.foodScore}}3.9</span>
+              <span class="score">{{seller.foodScore}}</span>
             </div>
             <div class="delivery-wrapper">
               <span class="title">送达时间</span>
@@ -103,7 +103,10 @@
         if (this.ratings.length) {
           return
         }
-        getRatings().then((ratings) => {
+        console.log(this.seller)
+        getRatings({
+          id: this.seller.id
+        }).then((ratings) => {
           this.ratings = ratings
         })
       },

@@ -28,7 +28,7 @@
             </div>
           </li>
         </ul>
-        <div class="favorite">
+        <div @click="toggleFavorite" class="favorite">
           <span class="icon-favorite" :class="{'active':favorite}"></span>
           <span class="text">{{favoriteText}}</span>
         </div>
@@ -53,7 +53,7 @@
       <split></split>
       <div class="pics">
         <h1 class="title">商家实景</h1>
-        <cube-scroll class="pic-wrapper" direction="horizontal" :options="picScrollOptions">
+        <cube-scroll class="pic-wrapper" :options="picScrollOptions">
           <ul class="pic-list">
             <li
               class="pic-item"
@@ -85,6 +85,9 @@
   import Split from 'components/split/split'
   import Star from 'components/star/star'
   import SupportIco from 'components/support-ico/support-ico'
+  import { saveTolocal, loadFromLocal } from 'common/js/storage'
+
+  const KEY = 'favorite'
 
   export default {
     name: 'seller',
@@ -118,6 +121,16 @@
         return this.favorite ? '已收藏' : '收藏'
       }
     },
+    created() {
+      this.favorite = loadFromLocal(this.seller.id, KEY, false)
+    },
+    methods: {
+      toggleFavorite: function () {
+        this.favorite = !this.favorite
+        console.log(this.seller.id)
+        saveTolocal(this.seller.id, KEY, this.favorite)
+      }
+    },
     components: {
       Split,
       Star,
@@ -133,109 +146,139 @@
   .seller
     height: 100%
     text-align: left
+
     .overview
       position: relative
       padding: 18px
+
       .title
         margin-bottom: 8px
         line-height: 14px
         font-size: $fontsize-medium
         color: $color-dark-grey
+
       .desc
         display: flex
         align-items: center
         padding-bottom: 18px
+
         .star
           margin-right: 8px
+
         .text
           margin-right: 12px
           line-height: 18px
           font-size: $fontsize-small-s
           color: $color-light-grey-g
+
       .remark
         display: flex
         padding-top: 18px
+
         .block
           flex: 1
           text-align: center
+
           &:last-child
             border: none
+
           h2
             margin-bottom: 4px
             line-height: 10px
             font-size: $fontsize-small-s
             color: $color-light-grey
+
           .content
             line-height: 24px
             font-size: $fontsize-small-s
             color: $color-dark-grey
+
             .stress
               font-size: $fontsize-large-xxx
+
       .favorite
         position: absolute
         width: 50px
         right: 11px
         top: 18px
         text-align: center
+
         .icon-favorite
           display: block
           margin-bottom: 4px
           line-height: 24px
           font-size: $fontsize-large-xxx
           color: $color-light-grey-s
+
           &.active
             color: $color-red
+
         .text
           line-height: 10px
           font-size: $fontsize-small-s
           color: $color-grey
+
     .bulletin
       padding: 18px 18px 0 18px
       white-space: normal
+
       .title
         margin-bottom: 8px
         line-height: 14px
         color: $color-dark-grey
         font-size: $fontsize-medium
+
       .content-wrapper
         padding: 0 12px 16px 12px
+
         .content
           line-height: 24px
           font-size: $fontsize-small
           color: $color-red
+
       .supports
         .support-item
           display: flex
           align-items: center
           padding: 16px 12px
+
           .text
             padding-left: 6px
             color: $color-background
             font-size: $fontsize-small
+
     .pics
       padding: 18px
+
       .title
         margin-bottom: 8px
         font-size: $fontsize-medium
         color: $color-dark-grey
+
       .pic-wrapper
         width: 100%
-        >>>.cube-scroll-content
+
+        >>> .cube-scroll-content
           display: inline-block
+
           .pic-list
             white-space: nowrap
             font-size: 0
+
             .pic-item
               margin-right: 6px
               display: inline-block
               width: 120px
               height: 90px
+
     .info
       padding: 18px
+
       .title
         padding-bottom: 8px
         font-size: $fontsize-medium
         color: $color-dark-grey
+
       .info-item
         padding: 16px 12px
         font-size: $fontsize-small

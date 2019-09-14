@@ -143,7 +143,9 @@
         if (this.goods.length) {
           return
         }
-        getGoods().then((goods) => {
+        getGoods({
+          id: this.seller.id
+        }).then((goods) => {
           this.goods = goods
         })
       },

@@ -2,7 +2,7 @@
   <div id="app">
     <v-header :seller="seller"></v-header>
     <div class="tab-wrapper">
-      <tab :tabs="tabs"></tab>
+      <tab :tabs="tabs" :initialIndex="2"></tab>
     </div>
   </div>
 </template>
@@ -14,12 +14,15 @@
   import Seller from 'components/seller/seller.vue'
   import Ratings from 'components/ratings/ratings'
   import { getSeller } from 'api'
+  import qs from 'query-string'
 
   export default {
     name: 'app',
     data() {
       return {
-        seller: {}
+        seller: {
+          id: qs.parse(location.search).id
+        }
       }
     },
     created () {
@@ -41,7 +44,7 @@
             value: 'ratings',
             component: Ratings,
             data: {
-              ratings: this.seller
+              seller: this.seller
             }
           },
           {
@@ -57,7 +60,9 @@
     },
     methods: {
       _getSeller() {
-        getSeller().then((seller) => {
+        getSeller({
+          id: this.seller.id
+        }).then((seller) => {
           this.seller = seller
         })
       }
